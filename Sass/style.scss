@@ -1,0 +1,870 @@
+@charset "UTF-8";
+
+/* font colors */
+
+$white: #fff;
+$pink: #ed145b;
+$fontGrey: #5a5a5a;
+$bcg: #f4f4f4;
+
+/*Mixins */
+
+@mixin center($justify) {
+    display: flex;
+    justify-content: $justify;
+    align-items: center;
+}
+
+@mixin flexSection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+@mixin font($size, $weight, $lineHeight) {
+    font-size: $size;
+    font-weight: $weight;
+    line-height: $lineHeight;
+}
+
+@mixin reponsive ($tabletWidth, $phoneWidth, $landscapeWidth){
+    
+    @include screen("tablet"){
+            width: $tabletWidth;
+            margin-bottom: 30px;
+        }
+        @include screen("phone"){
+            width: $phoneWidth;
+            margin-bottom: 30px;
+        }
+        @include screen("phoneLandscape"){
+            width: $landscapeWidth;
+            margin-bottom: 30px;
+        }
+}
+
+@mixin absoluteXcenter {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Media */
+
+@mixin screen($size) {
+$bigDesktop: "(min-width: 1650px)";
+$tablet: "(min-width: 768px) and (max-width: 1199px)";
+$tabletAndPhone: "(max-width: 1199px)";
+$phone: "(max-width: 767px)";
+$phoneLandscape: "(min-width: 443px) and (max-width: 767px)";
+$smallPhone: "(max-width: 393px)";
+
+@if $size == bigDesktop {
+  @media all and #{$bigDesktop} {
+    @content;
+  }
+}
+
+@else if $size == tablet {
+    @media all and #{$tablet} {
+      @content;
+    }
+  }
+   @else if $size == tabletAndphone {
+    @media all and #{$tabletAndPhone} {
+      @content;
+    }
+  }
+    @else if $size == phoneLandscape {
+    @media all and #{$phoneLandscape} {
+      @content;
+    }
+  }
+ 
+  @else if $size == phone {
+    @media all and #{$phone} {
+      @content;
+    }
+  }
+    @else if $size == smallPhone {
+    @media all and #{$smallPhone} {
+      @content;
+    }
+  }
+  @else {
+    @media all and #{$size} {
+      @content;
+    }
+  }
+}
+
+
+/* General */
+body {
+    font-family: 'Lato', sans-serif;
+    overflow-x: hidden;
+    color: $fontGrey;
+    background-color: $bcg;
+}
+
+section {
+    padding: 100px 0 80px 0;
+    p {
+        @include screen("tabletAndphone"){
+            text-align: center;
+        }
+    }
+}
+
+.container {
+    max-width: 1200px;
+	width: 100%;
+	height: 100%;
+	margin: 0 auto;
+    padding: 0 30px;
+}
+
+button {
+    width: 200px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: $pink;
+    border: none;
+    @include font(15px, 700, 38px);
+    text-transform: uppercase;
+    letter-spacing: 0.38px;
+    color: $white;
+    &:hover {
+        background-color: #d31551;
+        cursor: pointer;
+    }
+    
+}
+
+.text {
+        width: 100%;
+        text-align: center;
+        padding: 0 180px 50px 180px;
+        @include screen("tabletAndphone"){
+            padding: 0 0 50px 0;
+            p {
+            @include screen("tabletAndphone"){
+                text-align: center;
+            }
+        }
+        }
+    }
+
+
+p, li {
+    @include font(15px, 300, 30px);
+    letter-spacing: .38px;
+    @include screen("tabletAndphone") {
+        font-size: 18px;
+    }
+}
+
+h2 {
+    @include font(38px, 300, 52px);
+    letter-spacing: .95px;
+    position: relative;
+    font-style: italic;
+    text-align: center;
+    margin-bottom: 52px;
+    @include screen("phone"){
+        @include font(25px, 300, 35px);
+        margin-bottom: 40px;
+    }
+    @include screen("smallPhone"){
+        font-size: 23px;
+    }
+}
+
+h3 {
+    @include font(15px, 700, 30px);
+    text-transform: uppercase;
+    letter-spacing: .38px;
+    color: $pink;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style-type: none;
+        padding: 0;
+}
+
+h1::after, h2::after {
+    content: "";
+    position: absolute;
+    top: 73px;
+    @include absoluteXcenter;
+    height: 2px;
+    width: 200px;
+    background-color: $pink;
+    display: block;
+    @include screen("phone") {
+        top: 90px;
+    }
+    @include screen("phoneLandscape") {
+        top: 60px;
+    }       
+}
+
+h2::after {
+    @include screen("phone") {
+        top: 56px;
+    }
+}
+
+
+/* Header */
+header {
+    color: $white;
+    background: url(https://images84.fotosik.pl/1000/c03fd2792fab41cf.png);
+    background-position: center;
+    background-size: cover;
+    padding-top: 30px;      
+}
+
+nav {
+    @include center(space-between);   
+    .logo{
+        @include font(25px, 900, inherit);
+        position: relative;
+        z-index: 2;
+        span {
+            color: $pink;
+            letter-spacing: 2px;
+        }
+    }
+        
+    ul {
+        @include center(center);
+        font-size: 16px;
+        @include screen("tabletAndphone"){
+            display: block;
+            position: absolute;
+            width: 100%;
+            top:-500px;
+            @include absoluteXcenter;
+            text-align: center;
+            transition: .5s;
+            font-size: 22px;
+            background: rgba(0,0,0,.5);
+            padding-top: 60px;
+            padding-bottom: 10px;
+            z-index: 1;        
+        }
+        @include screen("phone"){
+            background: rgba(0,0,0,.9);
+            padding-top: 100px;
+        }
+        li {
+            margin: 0 8px;
+            a {
+                font-weight: 700;
+                &:hover {
+                    color: $pink;
+                    cursor: pointer;
+                }
+                
+            }
+            @include screen("tabletAndphone"){
+                    margin: 14px 0;
+                }
+            @include screen("phone"){
+                margin: 20px 0;
+            }
+        }
+     }
+}
+
+.navActive {
+    top: -50px;
+}
+
+
+/* burger */
+ .burger {
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    display: none;
+     @include screen("tabletAndphone"){
+         display: block;
+     }
+     z-index: 2;
+}
+
+.burger span {
+    height: 6px;
+    width: 100%;
+    background-color: white;
+    position: absolute;
+    transition: .2s;
+}
+
+.burger span:nth-child(1) {
+    top: 6px;
+}
+
+.burger span:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.burger span:nth-child(3) {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.burger span:nth-child(4) {
+    bottom: 6px;
+}
+
+.active span:nth-child(1) {
+    top: -100px;
+    opacity: 0;
+}
+
+.active span:nth-child(4) {
+    bottom: -100px;
+    opacity: 0;
+}
+
+.active span:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.active span:nth-child(3) {
+    top: 50%;
+    transform: translateY(-50%) rotate(-45deg);
+}
+
+.arrow {
+    width: 50px;
+    height: 50px;
+    bottom: -60px;
+    right: 30px;
+    position: fixed;
+    font-size: 40px;
+    border: 3px solid $pink;
+    border-radius: 50%;
+    transition: .5s;
+    text-shadow: 0 15px $pink, 0 30px $pink;
+    text-align: center;
+    overflow: hidden;
+}
+
+.arrow i {
+    animation: arrow 1s linear infinite;
+}
+
+.arrow.activeArrow {
+    bottom: 60px;
+    transition: .5s;
+}
+
+.arrow:hover {
+    cursor: pointer;
+}
+
+@keyframes arrow {
+    0% {
+        transform: translateY(50px);
+    }
+    
+    100% {
+        transform: translateY(-50px);
+    }
+}
+
+/*Hero */
+
+.hero {
+   text-align: center;
+   margin-top: 199px;
+    @include screen("phone"){
+        margin-top: 100px;
+    }    
+    h1{
+        @include font(46px, 300, 24px);
+        position: relative;
+        @include screen("phone"){
+            @include font(30px, 700, 35px);
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+        span{
+            font-weight: 700;
+        }
+    } 
+    p {
+        @include font(22px, 300, 38px);
+        letter-spacing: .55px;
+        margin: 82px 0 0 0;
+        @include screen("phone"){
+            @include font(16px, 300, 30px);
+            margin: 50px 10px 0 10px;
+        }
+    }
+    .header-button {
+        margin: 66px 0 228px 0;
+        @include screen("phone"){
+            margin-bottom: 100px;
+        }
+    }
+    
+}
+
+.line {
+    width: 100%;
+    display: block;
+    height: 50px;
+    transform: rotate(-1deg);
+    background-color: $pink;
+    margin-top:-33px;
+    position: relative;
+    z-index: -1;
+    @include screen("tablet"){
+        margin-top: -40px;
+    }
+    @include screen("phone"){
+        margin-top: -45px;
+    }
+}
+
+/*About section*/
+
+.about {
+    position: relative;
+    .container {
+        div {
+            width: 40%;
+            @include screen("tabletAndphone"){
+                width: 100%;
+                p {
+                    text-align: justify;
+                }
+            }
+        }
+        h2 {
+            text-align: left;
+            &::after {
+                top: 130px;
+                left: 22%;
+            }
+            @include screen("tabletAndphone") {
+                text-align: center;
+                &::after {
+                    left: 50%;
+                }
+            }
+            @include screen("phone"){
+//                margin-bottom: 40px;
+                &::after {
+                    top: 90px;
+                }
+            }
+
+        }
+        .video {
+            @include font(15px, 700, 30px);
+            color: $pink;
+       }    
+}
+    .laptop {
+        position: absolute;
+        right: -50px;
+        bottom: -70px;
+        width: 60%;
+        @include screen("bigDesktop") {
+            right: 0;
+            bottom: -100px;
+            width: 55%;
+        }
+        @include screen("tabletAndphone"){
+            display: none;
+        }
+        img {
+            height: auto;
+            width: 100%;
+        }
+    }
+}
+
+/*Services section*/
+
+.services {
+    background-color: $white;
+    .container{
+        @include flexSection;
+    }
+    .service {
+        width: 25%;
+        text-align: center;
+        @include reponsive (50%, 100%, 50%);
+        div {
+            height: 140px;
+            width: 140px;
+            margin: 0 auto;
+            border-radius: 50%;
+            border: 1px solid #c8c8c8;
+            @include center(center);
+        }
+    }
+    }
+
+/*Quote section*/
+    
+.quote {
+    background: url(https://images81.fotosik.pl/1002/d1c107d1afb262fd.png);
+    background-position: center;
+    background-size: cover;
+    padding-top: 140px;
+    padding-bottom: 45px;
+    @include screen("phone"){
+        padding-bottom: 25px;
+    }
+    .container {
+        padding: 0 100px;
+        text-align: center;
+        @include screen("phone"){
+            padding: 0 30px;
+        }
+        @include screen("phoneLandscape"){
+            padding: 0 80px;
+        }
+        p {
+            color: $white;
+            @include font(25px, 400, 40px);
+            font-style: italic;
+            letter-spacing: .63px;
+            margin-top: 0;
+            @include screen("phone"){
+               @include font(16px, 400, 25px) 
+            }
+        }
+        h3 {
+            @include font(158px, 700, 52px);
+            font-family: 'Libre Baskerville', serif;
+            margin: 0;
+            @include screen("phone"){
+                @include font(120px, 700, 52px)
+            }
+            &:nth-of-type(2){
+                margin-top: 95px;
+            }
+        }
+    }
+}
+
+/*Prices secrion*/
+
+.prices {
+    .container{
+    @include flexSection;
+    }
+    .priceType {
+        width: 23%;
+        text-align: center;
+        background-color: $white;
+        @include reponsive (48%, 100%, 48%);
+        &:hover {
+            &>.grey{
+                background-color: $pink;
+            }
+        }     
+        .grey {
+            background-color: $fontGrey;
+            color: $white;
+            padding: 50px 0 0 0;
+            p {
+                margin: 0;
+                &:nth-of-type(1){
+                @include font (20px, 700, 10px);
+                letter-spacing: .5px;
+                }
+                span {
+                        font-size: 50px;
+                        letter-spacing: 1.25px;
+                 }
+                &:nth-of-type(2) {
+                         @include font (15px, 700, 10px);
+                        letter-spacing: .38px;
+                 }
+            }
+            button {
+                transform: translateY(50%);
+                background-color: $bcg;
+                color: $fontGrey;
+            }
+            
+        }
+        
+        .white {
+            padding: 40px 0 40px 0;
+            ul {
+                margin-bottom: 26px;
+                li {
+                    margin: 9px 0;
+                }
+            }
+        }
+        
+    }
+}
+
+/*Informations section*/
+
+.informations {
+    background-color: $white;
+    .container {
+        @include flexSection;
+        .info {
+            width: 33%;
+            display: flex;
+            margin-bottom: 35px;
+            p {
+                @include screen("tabletAndphone"){
+                text-align: justify;
+                }
+            }
+            figure {
+                margin:25px;
+            }
+            @include reponsive (48%, 100%, 48%);
+        }
+    }
+}
+
+/*Join section*/
+
+.join {
+    background-color: $pink; 
+    padding: 80px 0 60px 0;
+    text-align: center;
+    
+    h4 {
+        @include font(38px, 300, 52px);
+        letter-spacing: .95px;
+        color: $white;
+        display: inline-block;
+        text-transform: uppercase;
+        margin: 0;
+        @include screen("phone"){
+            @include font(20px, 700, 35px);
+        }
+        
+        span {
+            font-weight: 700;
+        }       
+    }
+    button {
+        background-color: $white;
+        color: $pink;
+        margin-left: 25px;
+        transform: translateY(-5px);
+        @include screen("tabletAndphone"){
+            transform: translateY(15px);
+            margin: 0;
+        }
+    }
+}
+
+/*Gallery section*/
+
+.gallery {
+    background-color: $white;
+    .container{
+    @include flexSection;
+        .photo{
+            background-color: $bcg;
+            width: 31.5%;
+            margin-bottom: 60px;
+            figure {
+                margin: 0;
+                overflow: hidden;
+                position: relative;
+                &:hover {
+                    & > .layer{
+                        margin-top: 0;
+                        background-color: rgba(237, 20, 91, .7);
+                        cursor: pointer;
+                         }
+                    & > .icon-wrapper {
+                        opacity: 1;
+                        cursor: pointer;
+                         }
+                    }         
+               .layer {
+                position: absolute;
+                width: 300%;
+                height: 120%;
+                transform: rotate(2deg);
+                left: -25px;
+                top: 0;
+                margin-top: 255px;
+                background-color: rgba(237, 20, 91, 1);
+                transition: .5s;      
+                }
+                img {
+                width: 100%;
+                }
+                .icon-wrapper {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    color: $white;
+                    opacity: 0;
+                    font-size: 22px;
+                    transition: .6s;
+               }
+        }
+           .photoText {
+            padding: 16px 20px 10px 20px;
+            h5 {
+                @include font(15px, 700, 30px);
+                margin: 0;
+            }
+            p {
+                margin: 10px 0;
+                @include screen("tabletAndphone"){
+                    text-align: justify;
+                }
+            }
+        }
+            @include reponsive (48%, 100%, 48%);
+    }
+    }   
+    .show {
+        text-align: center;
+        position: relative;
+        &::after {
+            content: "";
+            height: 10px;
+            width: 20px;
+            top:30px;
+            position: absolute;
+            @include absoluteXcenter;
+            background-color: $pink;
+        }
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+/*More section*/
+
+.more {
+    background: url(https://images84.fotosik.pl/1002/25f68705aaebc853.png);
+    background-position: center;
+    background-size: cover;
+    text-align: center;
+    color: white;
+   .container {
+        padding: 10px 280px;
+        @include screen("tabletAndphone"){
+            padding: 0 30px;
+        }
+    }
+    button {
+        margin: 40px 0;
+    }
+}
+
+/*download section*/
+
+.download {
+    position: relative;
+    .container {
+        display: flex;
+        justify-content: flex-end;
+        div {
+            width: 45%;
+            @include screen("tabletAndphone"){
+                width: 100%;
+                text-align: center;
+                p {
+                    text-align: justify;
+                }
+            }
+            h2 {
+            text-align: left;
+            &::after {
+                top: 130px;
+                left: 22%;
+            }
+            @include screen("tabletAndphone") {
+                text-align: center;
+                max-width: 500px;
+                margin-left: auto;
+                margin-right: auto;
+                &::after {
+                    left: 50%;
+                }
+            }
+            @include screen("phone"){
+//                margin-bottom: 40px;
+                &::after {
+                    top: 90px;
+                }
+            }
+        }
+            button {
+                margin-top: 30px;
+            }
+            }
+        }
+    figure.browser {
+            position: absolute;
+            left: 40px;
+            top: 110px;
+            width: 45%;
+        
+        @include screen("bigDesktop"){
+            position: absolute;
+            left: 70px;
+            top: 55px;
+            width: 43%;
+        }
+        @include screen("tabletAndphone"){
+            display: none;
+        }
+        img {
+            height: auto;
+            width: 100%;
+        }
+    }
+}
+
+/*footer */
+
+footer {
+    background-color: #2b2b2b;
+    margin-top: 100px;
+    padding: 50px 0;
+    color: white;
+    .container {
+        display: flex;
+        justify-content: space-between;
+        @include screen("tabletAndphone"){
+            flex-direction: column;
+            text-align: center;
+        }
+        span {
+            color:$pink;
+            font-size: 400;
+            margin: 0;
+            padding: 0;
+        }
+    }
+}
